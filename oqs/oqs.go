@@ -182,15 +182,14 @@ func (kem *KeyEncapsulation) ExportSecretKey() []byte {
 
 // EncapSecret encapsulates a secret using a public key and returns the
 // corresponding ciphertext and shared secret.
-func (kem *KeyEncapsulation) EncapSecret(publicKey []byte) (ciphertext,
+func (kem *KeyEncapsulation) EncapSecret(publicKey []byte,sharedSecret []byte) (ciphertext,
 	sharedSecret []byte, err error) {
 	if len(publicKey) != kem.algDetails.LengthPublicKey {
 		return nil, nil, errors.New("incorrect public key length")
 	}
 
 	ciphertext = make([]byte, kem.algDetails.LengthCiphertext)
-	sharedSecret = make([]byte, kem.algDetails.LengthSharedSecret)
-
+	
 	rv := C.OQS_KEM_encaps(kem.kem,
 		(*C.uint8_t)(unsafe.Pointer(&ciphertext[0])),
 		(*C.uint8_t)(unsafe.Pointer(&sharedSecret[0])),
