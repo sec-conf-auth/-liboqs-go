@@ -1,3 +1,3 @@
-module github.com/open-quantum-safe/liboqs-go
+module github.com/sec-conf-auth/liboqs-go
 
 go 1.11
